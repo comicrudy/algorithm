@@ -1,0 +1,120 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+#include <set>
+#include <utility>
+#include <algorithm>
+using namespace std;
+
+class SalesPerson  
+{  
+private:  
+    string name;  
+    string division;  
+  
+public:  
+    explicit SalesPerson(string n = "", string d = "") : name(n), division(d) {}  
+  
+    string getName()  
+    {  
+        return name;  
+    }  
+  
+    void print()  
+    {  
+        printf("SalesPerson %s is in %s department.\n", name.c_str(), division.c_str());  
+    }  
+};  
+
+class DivisionIterator  
+{  
+private:  
+    SalesPerson **sales;  
+    int location;  
+    int Len;  
+      
+public:  
+    DivisionIterator(SalesPerson **v) : sales(v), location(0), Len(100)  
+    {  
+    }  
+  
+    SalesPerson *next()  
+    {  
+        return sales[location++];  
+    }  
+  
+    bool hasNext()  
+    {  
+        if (location < Len && sales[location]) return true;  
+        return false;  
+    }  
+  
+    void remove()   //not yet
+    {  
+    }  
+};  
+
+class Division  
+{  
+private:  
+    string name;  
+    SalesPerson **sales;  
+    int number;  
+    DivisionIterator *dit;  
+    int Len;  
+  
+public:  
+    Division(string n) : name(n), Len(100), number(0), dit(NULL)  
+    {  
+        sales = new SalesPerson*[Len];  
+        for (int i = 0; i < Len; i++)  
+        {  
+            sales[i] = NULL;  
+        }  
+    }  
+    ~Division()  
+    {  
+        for (int i = 0; i <= number; i++)  
+        {  
+            delete sales[i];  
+        }  
+        if (sales) delete [] sales;  
+        if (dit) delete dit;  
+    }  
+  
+    string getName()  
+    {  
+        return name;  
+    }  
+      
+    void add(string n)  
+    {  
+        sales[number++] = new SalesPerson(n, name);  
+    }  
+  
+    DivisionIterator *iterator()  
+    {  
+        if (!dit) dit = new DivisionIterator(sales);  
+        return dit;  
+    }  
+};  
+
+
+
+int main () {
+    Division divs("SalesDep");  
+    divs.add("Sally");  
+    divs.add("Jelly");  
+    divs.add("Lily");  
+    divs.add("Billy");  
+    divs.add("Cherry");  
+  
+    DivisionIterator *it = divs.iterator();  
+    while (it->hasNext())   
+    {  
+        SalesPerson *sa = it->next();  
+        sa->print();  
+    }  
+  return 0;
+}

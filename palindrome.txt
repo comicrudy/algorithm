@@ -1,0 +1,20 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+#include <set>
+#include <utility>
+#include <algorithm>
+#include <math.h> 
+
+using namespace std;
+
+bool palindrome(string& str){
+    return equal(str.begin(), str.end(), str.rbegin());
+}
+
+int main(){
+    string str = "abccbc";
+    cout << palindrome(str) << endl;
+    return 0;
+}

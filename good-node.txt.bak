@@ -1,0 +1,80 @@
+/*
+We have a list of N nodes with each node pointing to one of the N nodes. 
+It could even be pointing to itself. We call a node ¡®good¡¯, 
+if it satisfies one of the following properties: 
+
+* It is the tail node (marked as node 1) 
+* It is pointing to the tail node (node 1) 
+* It is pointing to a good node 
+
+*/
+
+/*
+case 1: longest list, change tail node to node 1
+case 2: largest common pointer, change the pointed node to node 1
+case 3: selfpointing(not node 1), change to node 1
+
+*/
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+vector<int> getInput(int N){
+    vector<int> V;
+    string str;
+    for(int i = 0; i < N; ++i){
+        getline(cin, str);
+        V.push_back(stoi(str)-1);
+    }
+    return V;
+}
+
+int goodNode(int N){
+    vector<int> V = getInput(N);
+    vector<unordered_set<int>> VSet;
+    unordered_set<int> Se;
+    int size = V.size(), temp, count = 0;
+    for(int i = 0; i < size; ++i){
+        if(V[i] == -1){
+            continue;
+        }
+        else {
+            if(VSet.size() != 0){
+                for(int j = 0; j < (int)VSet.size(); ++j){
+                    if(VSet[j].count(V[i])){
+                        VSet[j].insert(i);
+                    }
+                    else {
+                        Se.insert(i);
+                        while(!Se.count(V[i])){
+                            Se.insert(V[i]);
+                            temp = V[i];
+                            V[i] = -1;
+                            i = temp;
+                        }
+                        VSet.push_back(Se);
+                        Se.clear();                    
+                    }
+                }
+            }
+        }
+    }
+    for(int i = 0; i < (int)VSet.size(); ++i){
+        if(VSet[i].count(0))
+            continue;
+        else
+            ++count;
+    }
+    return count;
+}
+
+int main(){
+    string str;
+    getline(cin, str);
+    int N = stoi(str);
+    cout << goodNode(N) << endl;
+    return 0;
+}

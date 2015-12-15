@@ -1,0 +1,50 @@
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <memory>
+
+using namespace std;
+
+vector<pair<string, int>> Menu;
+vector<vector<string>> ret;
+vector<string> temp;
+void getOrder(int s, int curr, int target){
+    if(s >= (int)Menu.size()){
+        temp.clear();
+        curr = 0;
+        return;
+    }
+    
+    for(int i = 0; i <= target/Menu[s].second; ++i){
+        for(int j = 0; j < i; ++j){
+            temp.push_back(Menu[s].first);
+            curr += Menu[s].second;
+        }
+        if(curr == target){
+            ret.push_back(temp);
+            temp.clear();
+            curr = 0;
+            return;
+        }
+        else if(curr > target){
+            temp.clear();
+            curr = 0;            
+            return;
+        }
+        else {
+            getOrder(++s, curr, target);
+        }
+    }
+    return;
+}
+
+int main(){
+    Menu = {{"burger", 5},{"fries", 3},{"soda", 2}};
+    getOrder(0, 0, 10);
+    cout << ret.size() << endl;
+    return 0;
+}

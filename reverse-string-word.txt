@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+using namespace std;
+
+/*
+    flipping bits
+    The first question was about flipping the bits. Given a binary string,
+    return the maximum number of 1s you can get if you flip the bits.  
+*/
+
+string reverseStringwords(string& str){
+    str = str + ' ';
+    int size = str.size();
+    int j = size - 1;
+    string ret;
+    for(int i = size - 1; i >= 0; --i){
+        if(i == 0)
+            ret.append(string(str, 0, j));
+        else if(str[i] == ' '){
+            ret.append(string(str, (i + 1), j - i));
+            j = i;
+        }
+            
+    }
+    return ret;
+}
+
+int main(){
+    string s = "I love the world";
+    cout << reverseStringwords(s) << endl;
+    return 0;
+}
+

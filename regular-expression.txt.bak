@@ -1,0 +1,82 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+
+using namespace std;
+
+/*
+    reg expression
+Implement regular expression matching with support for '.' and '*'.
+
+'.' Matches any single character.
+'*' Matches zero or more of the preceding element.
+
+The matching should cover the entire input string (not partial).
+
+The function prototype should be:
+bool isMatch(const char *s, const char *p)
+
+Some examples:
+isMatch("aa","a") ¡ú false
+isMatch("aa","aa") ¡ú true
+isMatch("aaa","aa") ¡ú false
+isMatch("aa", "a*") ¡ú true
+isMatch("aa", ".*") ¡ú true
+isMatch("ab", ".*") ¡ú true
+isMatch("aab", "c*a*b") ¡ú true
+*/
+
+bool isMatch(const string& strA, const string& strB){
+//    if((int)strA.size() != (int)strB.size()){
+//        if(strB.find("*") == std::string::npos) //string npos ==  no position
+//            return 0;
+//    }
+    for(int i = 0, j = 0; i < (int)strA.size(), j < (int)strB.size(); ++i, ++j){
+        
+        if(strA[i] == strB[j]){
+            if(j == (int)strB.size() - 1 && i != (int)strA.size() - 1) {
+                return 0;
+            }
+            continue;
+        }
+        else if(strB[j] == '?'){
+            if(j == (int)strB.size() - 1 && i != (int)strA.size() - 1) {
+                return 0;
+            }            
+            continue;
+        }
+        else if(strB[j] == '*'){
+            if(j == (int)strB.size() - 1)
+                return 1;
+            else {
+                i = (int)strA.size() - (int)strB.size() + j;
+            }
+        }
+        else {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main(){
+    cout << isMatch("aa","ac") << endl;
+    cout << isMatch("aa","aa") << endl;
+    cout << isMatch("aaa","aa") << endl;
+    cout << isMatch("aa","a*") << endl;
+    cout << isMatch("aa","?*") << endl;
+    cout << isMatch("aab", "c*a*b") << endl;
+    return 0;
+}

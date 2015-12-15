@@ -1,0 +1,60 @@
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <unordered_map>
+#include <algorithm>
+#include <set>
+#include <queue>
+#include <time.h> 
+#include <limits.h>
+#include <functional>
+#include <map>
+
+
+using namespace std;
+
+/*
+Given two linked lists of integers, write a function to determine the intersection node of two lists
+*/
+
+struct llnode{
+    int id;
+    llnode* next;
+};
+
+llnode* listIntersection(llnode* listA, llnode* listB, int sizeA, int sizeB){
+    int diff = 0;
+    if(sizeA > sizeB){
+        diff = sizeA -sizeB;
+        while(diff > 0){
+            listA = listA->next;
+            --diff;
+        }
+    }
+    else {
+        diff = sizeB - sizeA;
+        while(diff > 0){
+            listB = listB->next;
+            --diff;
+        }
+    }
+    while(listA->next != NULL && listB->next != NULL){
+        if(listA == listB){
+            return listA;
+        }
+        else {
+            listA = listA->next;
+            listB = listB->next;
+        }
+    }
+    return nullptr;
+}
+
+
+int main(){
+    
+}

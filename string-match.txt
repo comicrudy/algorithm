@@ -1,0 +1,47 @@
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+bool checkString(string& str, string& str1){    
+    int size = (int)str.size(), size1 = (int)str1.size();
+    string subS, subS1;
+    if(str[0] == str1[0]){
+        if((int)str.size() == 1 && (int)str1.size() == 1)
+            return true;
+        else {
+            subS = str.substr(1, size - 1);
+            subS1 = str1.substr(1, size1 - 1);
+            return checkString(subS, subS1);
+        }
+    }
+    else if(str[0] == '?'){
+        if((int)str.size() == 1 && (int)str1.size() == 1)
+            return true;
+        else {
+            subS = str.substr(1, size - 1);
+            subS1 = str1.substr(1, size1 - 1);
+            return checkString(subS, subS1);
+        }
+    }
+    else if(str[0] == '*'){
+        if((int)str.size() == 1)
+            return true;
+        else  {      
+            subS = str.substr(1, size - 1);
+            subS1 = str1.substr(size1 - size + 1, size - 1);
+            return checkString(subS, subS1);
+        }
+    }
+    else 
+        return false;
+}
+
+int main(){
+    string a = "abc?de*f";
+    string b = "abcadeadfsdff";
+    cout << checkString(a, b) << endl;
+    return 0;
+}

@@ -1,0 +1,33 @@
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <memory>
+#include <cmath>
+
+using namespace std;
+
+/*
+    newton method square root
+*/
+
+int squareRoot(int x){
+    float pre = x;
+    float curr = (x + x/pre)/ 2;
+    float est = 0.000000001;
+    int i = 0;
+    while(abs(curr - pre) > est){
+        cout << ++i <<endl;
+        pre = curr;
+        curr = (curr + x/curr)/2;
+    }
+    return curr;
+}
+
+int main(){
+    cout << squareRoot(10000) << endl;
+    return 0;
+}

@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+
+using namespace std;
+
+/*
+    add two number for array
+*/
+
+vector<int> addTwonum(vector<int>& arrayA, vector<int>& arrayB){
+    int sizeA = (int)arrayA.size(), sizeB = (int)arrayB.size();
+    int r = 0, c = 0, i = sizeA - 1, j = sizeB - 1;;
+    vector<int> ret;    
+    while(true){
+        if(i >= 0 && j >= 0){
+            r = (arrayA[i] + arrayB[j] + c) % 10;
+            ret.push_back(r);
+            c = (arrayA[i] + arrayB[j] + c) / 10; 
+            --i;
+            --j;
+        }
+        else if(i >= 0){
+                r = (arrayA[i] + c) % 10;
+                ret.push_back(r);
+                c = (arrayA[i] + c) / 10;
+                --i;
+        }
+
+        else if(j >=0){
+                r = (arrayB[j] + c) % 10;
+                ret.push_back(r);
+                c = (arrayB[j] + c) / 10;
+                --j;            
+        }
+        else {
+            if(c > 0){
+                ret.push_back(c);
+            }
+            break;
+        }
+    }
+    return ret;
+}
+
+int main(){
+    vector<int> a = {1,2};
+    vector<int> b = {9,0,9};
+    vector<int> ret = addTwonum(a, b);
+    reverse(ret.begin(),ret.end());
+    for(int i = 0; i < (int)ret.size(); ++i){
+        cout << ret[i] << endl;
+    }
+    return 0;
+}

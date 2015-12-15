@@ -1,0 +1,22 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+//an 8*n^2 algorithm
+
+int numberofIslands(){
+    //maintain a set for visited nodes
+    //search from upleft to downright
+    //skip all 0s
+    //if visited skip
+    //if not visit it if all neighbors(H,V,D) not visited, add an island
+    
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
+    
+    return 0;
+}

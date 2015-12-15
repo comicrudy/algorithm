@@ -1,0 +1,123 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+
+using namespace std;
+/*
+    2.two link listÇómerge point
+*/
+typedef  struct listNode LN;
+
+struct listNode{
+    int val;
+    LN* next;
+};
+
+LN* mergePoint(LN* headA, LN* headB){
+    int sizeA = 0, sizeB = 0;
+    LN *currA = headA, *currB = headB;
+    while(currA != NULL){
+        ++sizeA;
+        currA = currA->next;
+    }
+    while(currB != NULL){
+        ++sizeB;
+        currB = currB->next;
+    }
+    cout << sizeA << ' ' << sizeB << endl;
+    currA = headA;
+    currB = headB;
+    while(sizeA > sizeB){
+        currA = currA->next;
+        --sizeA;
+    }
+    while(sizeA < sizeB){
+        currB = currB->next;
+        --sizeB;
+    }
+//    cout << sizeA << ' ' << sizeB << endl;
+    for(int i = 0; i < sizeA; ++i){
+//        cout << currA << ' ' << currB << endl;
+        if(currA == currB){
+            return currA;
+        }
+        else {
+            currA = currA->next;
+            currB = currB->next;
+        }
+    }
+    return NULL;
+}
+
+LN* listInitial(LN* headA, LN* headB){
+    int size = rand() % 5 + 1;
+//    cout << size << endl;
+    LN *currA, *currB, *preA = headA, *preB = headB;
+    for(int i = 0; i < size; ++i){        
+        currA = new LN;
+//        currB = new LN;
+        currA->next = NULL;
+//        currB->next = NULL;
+        currA-> val = i;
+//        currB-> val = i;
+        preA->next = currA;
+        preA = currA;
+//        currA = currA->next;
+//        preB->next = currB;
+//        preB = currB;
+        currA = NULL;
+//        currB = NULL;
+//        currB = currB->next;
+    }
+    int size_add = rand() % 8 + 1;
+//    cout << size_add << endl;
+    preA = headA;
+    for(int i = 0; i < size_add; ++i){
+        currA = new LN;
+        currA->next = preA;
+        currA->val = i;
+        preA = currA;
+        currA = NULL;
+    }
+    return preA;
+}
+
+int main(){
+    LN *headA = new LN;
+    LN *headB = new LN;
+    headA->val = 0;
+    headB->val = 0;
+    headA->next = NULL;
+    headB->next = headA;
+//    cout << headA << ' ' << headB << endl;
+    
+//    cout << headA << endl;
+
+    LN *currA = listInitial(headA, headB), *currB = headB;    
+//    cout << currA << ' ' << currB << endl;
+/*    while(currB != NULL){
+        cout << currB->val << endl;
+        currB = currB->next;
+    }
+    cout << endl;
+    while(currA != NULL){
+        cout << currA->val << endl;
+        currA = currA->next;
+    }        
+*/
+    LN *ret = mergePoint(currA, currB);
+    cout << ret << endl;
+    return 0;
+}

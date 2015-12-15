@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+
+using namespace std;
+
+vector<string> V = {"abc", "bca", "aaa", "cba", "bbb", "ccc", "cccc", "aaaa"};
+
+bool checkAnagram(const string& T){
+    string target = T;
+    int size_T = T.size();
+    map<char, int> target_M, M;
+    for(int k = 0; k < size_T; ++k){
+        ++target_M[T[k]];
+    }
+    for(int i = 0; i < (int)V.size(); ++i){
+        if((int)V[i].size() != size_T)
+            continue;
+        else {
+//            string temp = V[i];
+   
+        for(int l = 0; l < size_T; ++l){
+            ++M[V[i][l]];
+        }
+            if(target_M == M)
+                return 1;
+            else {
+                M.clear();
+            }
+            
+        }
+
+    }
+    return 0;
+}
+
+int main(){
+    string T = "bbb";
+    cout << T << ' ' << checkAnagram(T) << endl;
+    return 0;
+}
+
+

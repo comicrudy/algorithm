@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+#include <limits.h>
+
+
+using namespace std;
+
+long reverse(int num){
+    long ret = 0;
+    while(num % 10 == 0){
+        num /= 10; 
+    }
+    while(num != 0){
+        cout << num << ' ' << ret << endl;
+        ret = ret * 10 + (num % 10);
+        num = num / 10;
+    }
+    return ret;
+}
+
+int main(){
+    int num = INT_MAX;
+    cout << num << ' ' << reverse(num) << endl;
+    return 0;
+}

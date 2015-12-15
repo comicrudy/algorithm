@@ -1,0 +1,44 @@
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <memory>
+#include <cmath>
+
+using namespace std;
+
+/*
+    closest char
+*/
+
+char closestChar(string& str, char target){
+    char ret = str[0];
+    int size = (int)str.size();
+    int s = 0, e = size - 1, mid;
+    while(s <= e){
+        mid = (s + e) / 2;
+        if(str[mid] - target == 1){
+            ret = str[mid];
+            break;
+        }
+        else if(str[mid] - target > 0){
+            e = mid;
+            ret = str[mid];
+        }
+        else {
+            s = mid;
+        }
+    }
+    return ret;
+}
+
+int main(){
+    string str = "abcdef";
+    cout << closestChar(str, 'c') << endl;
+    return 0;
+}
+
+

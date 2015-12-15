@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+
+using namespace std;
+
+bool comP(pair<char, int> i, pair<char, int> j){
+    return i.second < j.second;
+}
+
+
+int main(){
+    vector<pair<char, int>> V;
+    map<char, int> M;
+    int  size;
+    M['a'] = 1;
+    M['b'] = 2;
+    M['c'] = 3;
+    V = vector<pair<char, int>>(M.begin(), M.end());
+    sort(V.begin(), V.end(), comP);
+    size = (int)V.size();
+    if(size%2 == 0){
+        cout << "NO" << endl;
+    }
+    else {
+        cout << V[(int)(size/2)].first << endl;
+    }
+    
+    return 0;
+}

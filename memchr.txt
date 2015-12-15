@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+
+using namespace std;
+
+
+int main(){
+    char str[] = "Example string";
+    const char* res = (char*)memchr(str, 'z', 16);
+//    printf("%p\n", res);  // uncomment this line and see what happens
+    int x = !*(int*)res;
+//    cout << x << endl;
+    return 0;
+}
+
+

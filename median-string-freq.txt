@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+using namespace std;
+
+/*
+    给一个string list, 例如：['a', 'b', 'b', 'c', 'c', 'e', 'e', 'e']，
+    返回出次次数是中位数的字符。例如本题，应该返回[b, c].
+*/
+bool comP(pair<string, int> A, pair<string, int> B){
+    return A.second < B.second;
+}
+
+vector<string> medianFreq(vector<string>& Input){
+    int size = (int)Input.size(), median = 0;
+    vector<string> ret;
+    unordered_map<string, int> M;
+    for(int i = 0; i < size; ++i){
+        ++M[Input[i]];        
+    }
+    vector<pair<string, int>> V(M.begin(), M.end());
+    sort(V.begin(), V.end(), comP);
+    median = V[((int)V.size()+1)/2].second;
+    for(int i = 0; i < (int)V.size(); ++i){
+        if(V[i].second == median)
+            ret.push_back(V[i].first);
+        else if(V[i].second > median)
+            break;
+        else 
+            continue;
+    }
+    return ret;
+} 
+
+int main(){
+    vector<string> Input = {"a","b","b","c","c","d","d","d"};
+    vector<string> Output = medianFreq(Input);
+    for(int i = 0; i < (int)Output.size(); ++i){
+        cout << Output[i] << endl;
+    }
+    return 0;
+
+}

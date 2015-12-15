@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+using namespace std;
+
+/*
+Two Difference Jan 6 2015
+有序数组中都是正数且为unique number，找出两个数A、B，so that A-B = 一个给定的数C。要求使用常数空间和O(N)时间。
+*/
+
+pair<int,int> twoDiff(vector<int>& nums, int c){
+    int size = (int)nums.size();
+    set<int> setA(nums.begin(), nums.end());
+    if(size < 2)
+        return make_pair(-1,-1);
+/*    for(int i = 1; i < size; ++i){
+        b = nums[i];
+        if((a - b) == c)
+            return pair(a,b);
+        else if((b - a) == c)
+            return pair(b,a);
+        
+    }
+*/
+    for(int i = 0; i < size; ++i){
+        if(setA.count(nums[i] + c))
+            return make_pair(nums[i] + c, nums[i]);
+        else
+            continue;
+    }
+}
+
+int main(){
+    vector<int> nums = {1,2,3,4,5,6,7};
+    pair<int, int> pairA = twoDiff(nums, 4);
+    cout << pairA.first << ' ' << pairA.second << endl;
+    return 0;
+}

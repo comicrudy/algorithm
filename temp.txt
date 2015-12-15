@@ -1,0 +1,52 @@
+map<string, int> M;
+int count1 = 0, Cmax = 0;
+
+void dfs(string& str){
+    
+    string S_old, S_new; //track the old string and the new one
+    Cmax = max(Cmax, count1); //update max length when visiting the new string
+    int S_size = (int)str.size(); 
+    for(int i = 0; i < S_size; ++i){
+        S_old = str;
+        S_new = S_old.erase(i, 1); //erase one char everytime to get the new string
+        if(M.count(S_new)){ //if it is in dictionary
+             //erase to save time..
+            ++count1;
+            dfs(S_new);
+            --count1; //backtracking
+            M.erase(S_new);
+                
+        }
+        else {
+            continue;
+        }
+    }
+}
+
+int longest_chain(vector<string>& w) {
+/*
+    string str;
+    getline(cin, str);
+    cout << str << endl;
+    int N;
+    stringstream convert(str); 
+    if ( !(convert >> N) )
+        N = 0;
+    cout << N << endl;
+//    int N = std::stoi(str);
+*/
+    string temp;
+    for(int i = 0; i < (int)w.size(); ++i){ //initialize the map
+        M.insert(make_pair(w[i], 1));
+    }
+    while(M.size() != 0){
+        auto it = M.rbegin();
+        count1 = 0; //clean count1
+        temp = it->first;
+        
+        dfs(temp); //deep-first 
+        M.erase(temp); 
+    }
+    
+    return Cmax + 1; //number of new strings + itself
+}

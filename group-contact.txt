@@ -1,0 +1,33 @@
+#include <vector>
+#include <string>
+#include <iostream>
+using namespace std;
+
+class contact{
+public:
+    string name;
+    vector<string> emails;
+};
+
+void groupContact(vector<contact>& V){
+    for(int i = 0; i< (int)V.size(); ++i){
+        V[i].emails.push_back("new");
+    }
+    for(int i = 0; i< (int)V.size(); ++i){
+        cout << V[i].name << endl;
+        for(auto email : V[i].emails){
+            cout << email << ' ';
+        }
+    }
+}
+
+int main() {
+    contact C1;
+//    C1 = new contact;
+    C1.name = "Shu";
+    C1.emails.push_back("rudychen.gg@gmail.com");
+    vector<contact> V;
+    V.push_back(C1);
+    groupContact(V);
+    return 0;
+}

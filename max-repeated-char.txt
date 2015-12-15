@@ -1,0 +1,64 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+using namespace std;
+
+/*
+    max repeated char in a string
+*/
+
+vector<char> maxRepeated(string& str){
+    vector<char> ret;
+    int size = str.size();
+    int maxcount = 0, count = 0;
+    char pre = str[0];
+    ret.push_back(str[0]);
+    for(int i = 1; i < size; ++i){
+        if(pre == str[i]){
+            ++count;
+            if(count == maxcount){
+                ret.push_back(str[i]);
+            }
+            else if(count > maxcount){
+                maxcount = count;
+                ret.clear();
+                ret.push_back(str[i]);
+            }
+            else {
+                continue;
+            }
+        }
+        else {
+            if(maxcount == 0){
+                ret.push_back(str[i]);
+                count = 0;
+                pre = str[i];
+            }
+            else {
+                count = 0;
+                pre = str[i];
+            }
+        }
+    }
+    return ret;
+}
+ 
+int main(){
+    string s = "this";
+    vector<char> ret = maxRepeated(s);
+    for(int i = 0; i < (int)ret.size(); ++i){
+        cout << ret[i] << endl;
+    }
+    return 0;
+}

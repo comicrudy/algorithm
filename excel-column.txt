@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+using namespace std;
+
+/*
+    2. Excel Sheet Column Title.
+    Given a positive integer, return its corresponding column title as appear in an Excel sheet.
+
+    For example:
+
+    1 -> A
+    2 -> B
+    3 -> C
+    ...
+    26 -> Z
+    27 -> AA
+    28 -> AB 
+*/
+
+string excelCol(int num){
+    string ret = "";
+    int remainder = 0, quo = num, n = 26;
+    if(num == 0)
+        return ret;
+    while(quo != 0){
+        remainder = quo % n;
+        quo = quo / n;
+        if(remainder == 0){
+            --quo;
+            ret.push_back('Z');
+        }
+        else
+            ret.push_back('A'+ remainder - 1);
+    }
+    reverse(ret.begin(), ret.end());
+    return ret;
+}
+
+int main(){
+    int num = 28;
+    cout << excelCol(num) << endl;
+    return 0;
+}

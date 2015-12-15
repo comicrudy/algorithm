@@ -1,0 +1,87 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+#include <set>
+#include <utility>
+#include <algorithm>
+#include <math.h> 
+
+using namespace std;
+
+#include <iostream>
+#include <limits.h>
+#include <bitset>
+#include <math.h>
+#include <algorithm>
+#include <unordered_set>
+using namespace std;
+
+int getDigits(vector<int>& V){
+    int digits = 1;
+    int maxNum=INT_MIN;
+    for(int i=0; i< (int)V.size(); ++i){
+        maxNum = max(maxNum, V[i]);
+    }
+    while(true){
+        if(maxNum/10 <= 0)
+            break;
+        else {
+        maxNum /= 10;
+        ++digits;
+        }
+    }
+    cout << digits << endl;
+    return digits;
+}
+
+void radixSort(vector<int>& V){
+    int size = V.size();
+    vector<int> temp;
+    temp.resize(size);
+    int digits = getDigits(V);
+    int radix = 1, k, d = 10;
+    vector<int> count;
+    count.resize(d);
+    for(int i=0; i< digits; ++i){
+        for(int j=0; j< d; ++j){ //initialize count to 0s for each digit
+            count[j] = 0;
+        }
+        for(int j=0; j< size; ++j){ //count 
+            k = V[j]%d;
+            ++count[k];
+        }
+        for(int j=1; j< d; ++j){ //offset
+            count[j] = count[j]+count[j-1];
+        }
+        for(int j=0; j< size; ++j){
+            k = (V[j]/radix)%d;
+            temp[count[k]-1] = V[j];
+            --count[k];
+        }
+        for(int j=0; j< size; ++j){ //update V
+            V[j] = temp[j];
+        }
+        radix *= d;
+
+    }
+    temp.clear(); // clear temp
+    count.clear(); // clear count
+}
+
+int main(){
+    vector<int> V = {8, 9, 7, 5, 4, 1};
+    radixSort(V);
+    for(int i : V)
+    cout << i << endl;
+    return 0;
+}
+
+int main(){
+    vector<int> V = {3,8,5,4,13,65,71,19,20};
+    radixSort(V);
+    for(int i=0; i< V.size(); ++i){
+        cout << V[i] << ' ';
+    }
+    return 0;
+}

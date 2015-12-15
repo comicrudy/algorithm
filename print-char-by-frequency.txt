@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+#include <set>
+#include <utility>
+#include <algorithm>
+#include <math.h> 
+#include <unordered_map>
+#include <utility>
+#include <algorithm> 
+
+using namespace std;
+
+bool comP(pair<char, int>& i, pair<char, int>& j){
+    return i.second > j.second;
+}
+
+char first_not_dup(const string& input) {
+    vector<pair<char, int>> V;
+    int cur = 0, length = (int)input.length();
+    unordered_map <char,int> dup;
+    for (auto c : input) {
+        ++dup[c];
+    }
+    for(auto i = dup.begin(); i !=dup.end(); ++i){
+        cout << i->first << ' ' << i->second << endl;
+        V.push_back(*i);
+    }
+    while (dup[input[cur]] > 1) {
+        ++cur;
+    }
+    std::sort(V.begin(), V.end(), comP);
+    for(auto i : V)
+        cout << i.first << endl;
+    return (cur == length) ? '0':input[cur];
+}
+
+int main(){
+    string input;
+    cin >> input;
+    cout << first_not_dup(input) << endl;
+    return 0;
+}

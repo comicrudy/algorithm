@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+
+using namespace std;
+
+/*
+    1. Union Two Sorted Array
+*/
+
+vector<int> unionArray(vector<int>& A, vector<int>& B){
+    int sizeA = (int)A.size(), sizeB = (int)B.size(), i = 0, j = 0;
+    bool flag = true;
+    vector<int> ret;
+    while(i < sizeA || j < sizeB){
+        if(i == sizeA || j == sizeB){
+            flag = 0;
+        }
+        if(flag){
+            if(A[i] < B[j]){
+                ret.push_back(A[i]);
+                ++i;
+            }
+            else {
+                ret.push_back(B[j]);
+                ++j;
+            }
+        }
+        else {
+            if(i < sizeA){
+                ret.push_back(A[i]);
+                ++i;
+            }
+            if(j < sizeB){
+                ret.push_back(B[j]);
+                ++j;
+            }
+        }
+    }
+    return ret;
+}
+int main(){
+    vector<int> a = {1,4,5};
+    vector<int> b = {2,3,6};
+    vector<int> ret = unionArray(a, b);
+    for(auto it = ret.begin(); it != ret.end(); ++it){
+        cout << *it << endl;
+    }
+    return 0;
+}

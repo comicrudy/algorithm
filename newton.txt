@@ -1,0 +1,40 @@
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <memory>
+#include <cmath>
+#include <string.h>
+#include <algorithm>
+#include <map>
+#include <list>
+#include <climits>
+
+
+using namespace std;
+
+/*
+newton method
+
+sqr(n)
+
+x^2 - n = f(x)
+f'(x) = 2x
+X_n+1 = X_n -  f(x)/f'(x) = X_n - (X_n^2 - n)/(2*X_n) = X_n/2 + n/(2*X_n)
+*/
+
+double sqr(double n){
+    double new_x = n, old_x = n / 2, e = 0.0000001;
+    while(abs(new_x - old_x) > e){
+        old_x = new_x;
+        new_x = (n / old_x + old_x) / 2;
+    }
+    return new_x;
+}
+
+int main(){
+    cout << sqr(1000) << endl;
+}

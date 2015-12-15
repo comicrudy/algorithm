@@ -1,0 +1,43 @@
+#include <iostream>       
+#include <queue>          
+#include <string>
+#include <vector>
+#include <utility>
+#include <functional>
+#include <limits.h>
+#include <stack>
+
+
+using namespace std;
+
+/*
+    valid parenthesis
+*/
+
+bool validP(string& str){
+    stack<char> ST;
+    int size = str.size();
+    for(int i = 0; i < size; ++i){
+        if(str[i] == '('){
+            ST.push(str[i]);
+        }
+        if(str[i] == ')'){
+            if(ST.top() == '('){
+                ST.pop();
+            }
+            else {
+                return 0;
+            }
+        }
+        else {
+            continue;
+        }
+    }
+    return 1;
+}
+
+int main(){
+    string s = "(())()()()(())";
+    cout << validP(s) << endl;
+    return 0;
+}

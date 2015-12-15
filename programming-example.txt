@@ -1,0 +1,62 @@
+/*
+Given N queens in NxN chess board, return the largest number of threats a queen faces. 
+
+*/
+
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <utility>
+
+using namespace std;
+
+
+map<int, int> M; //input as a map of Queens with the number of threats it has
+map<int, vector<int>> M1;
+map<int, vector<int>> M2;
+vector<int> V;
+
+int largestThreat(){
+    int threats;
+    vector<int> Temp; 
+    int size = (int)V.size(), largest = 0;
+    for(int i = 0; i < size; ++i){
+        if(!M1.count(V[i]-i)){
+            Temp.push_back(i);
+            M1.insert(std::pair<int, vector<int>>(V[i] - i, Temp));
+            Temp.clear();
+        }
+        else {
+            M1[V[i]-i].push_back(i);            
+            ++M[i];
+            ++M[M1[V[i]-i][(int)M1[V[i]-i].size()-2]];
+        }
+        if(!M2.count(V[i]+i)){
+            Temp.push_back(i);
+            M2.insert(std::pair<int, vector<int>>(V[i] + i, Temp));
+            Temp.clear();
+        }
+        else {
+            M2[V[i]+i].push_back(i);
+            ++M[i];
+            ++M[M2[V[i]+i][(int)M2[V[i]+i].size()-2]];
+        }        
+    }
+    for(auto it = M.begin(); it != M.end(); ++it){
+        largest = max(largest, it->second);
+    }
+    return largest;
+}
+
+int main(){
+    cout << largestThreat() << endl;
+    return 0;
+}
+
+

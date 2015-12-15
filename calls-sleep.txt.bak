@@ -1,0 +1,300 @@
+ C++  
+ Clear
+
+1
+#include <iostream>
+2
+#include <vector>
+3
+#include <map>
+4
+#include <string>
+5
+#include <queue>
+6
+#include <ctime>
+7
+#include <thread>         // std::this_thread::sleep_for
+8
+#include <chrono> 
+9
+​
+10
+using namespace std;
+11
+​
+12
+// implement a rate-limiting algorithm to protect calls to an expensive shared resource.  Your client code should try to make as many calls as possible to the library but not exceed a rate of 5 calls per second.
+13
+​
+14
+​
+15
+queue<time_t> time_R;
+16
+​
+17
+bool request(){
+18
+  time_t T;
+19
+  time(&T);
+20
+  if((int)time_R.size() < 5){
+21
+    time_R.push(T);
+22
+    return 1;
+23
+  }
+24
+  else if((int)time_R.size() == 5){
+25
+    if(difftime(T,time_R.front()) > 1){
+26
+      time_R.pop();
+27
+      time_R.push(T);
+28
+      return 1;
+29
+    }
+30
+    else {      
+31
+      return 0;
+32
+    }
+33
+  }
+34
+}
+35
+​
+36
+int main() {
+37
+  while (true) {
+38
+      if (request()){ 
+39
+        cout << "arrive time" << endl;
+40
+      } 
+41
+      else {
+42
+        cout << "sleeping" << endl;
+43
+        std::this_thread::sleep_for (std::chrono::seconds(1));
+44
+      }
+45
+    
+46
+  }
+47
+  return 0;  
+48
+}
+49
+​
+6:34pm - sean running 44 lines of C++
+solution.cpp:13:11: error: type/value mismatch at argument 1 in template parameter list for ‘template<class _Tp, class _Sequence> class std::queue’
+ queue<time> time_R;
+           ^
+solution.cpp:13:11: error:   expected a type, got ‘time’
+solution.cpp:13:11: error: template argument 2 is invalid
+solution.cpp:13:19: error: invalid type in declaration before ‘;’ token
+ queue<time> time_R;
+                   ^
+solution.cpp: In function ‘bool request()’:
+solution.cpp:16:8: error: expected ‘;’ before ‘T’
+   time T;
+        ^
+solution.cpp:16:9: warning: statement is a reference, not call, to function ‘time’ [-Waddress]
+   time T;
+         ^
+solution.cpp:16:9: warning: statement has no effect [-Wunused-value]
+solution.cpp:17:9: error: ‘T’ was not declared in this scope
+   time(&T);
+         ^
+solution.cpp:18:18: error: request for member ‘size’ in ‘time_R’, which is of non-class type ‘int’
+   if((int)time_R.size() < 5){
+                  ^
+solution.cpp:19:12: error: request for member ‘push’ in ‘time_R’, which is of non-class type ‘int’
+     time_R.push(T);
+            ^
+solution.cpp:22:23: error: request for member ‘size’ in ‘time_R’, which is of non-class type ‘int’
+   else if((int)time_R.size() == 5){
+                       ^
+solution.cpp:23:28: error: request for member ‘top’ in ‘time_R’, which is of non-class type ‘int’
+     if(difftime(T - time_R.top() > 1)){
+                            ^
+solution.cpp:24:14: error: request for member ‘pop’ in ‘time_R’, which is of non-class type ‘int’
+       time_R.pop();
+              ^
+solution.cpp:25:14: error: request for member ‘push’ in ‘time_R’, which is of non-class type ‘int’
+       time_R.push(T);
+              ^
+solution.cpp:33:11: error: a function-definition is not allowed here before ‘{’ token
+ int main(){
+           ^
+solution.cpp:44:1: error: expected ‘}’ at end of input
+ }
+ ^
+solution.cpp:44:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+6:36pm - sean running 44 lines of C++
+solution.cpp: In function ‘bool request()’:
+solution.cpp:23:26: error: ‘class std::queue<long int>’ has no member named ‘top’
+     if(difftime(T,time_R.top()) > 1){
+                          ^
+solution.cpp:33:11: error: a function-definition is not allowed here before ‘{’ token
+ int main(){
+           ^
+solution.cpp:44:1: error: expected ‘}’ at end of input
+ }
+ ^
+solution.cpp:44:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+6:37pm - sean running 44 lines of C++
+solution.cpp: In function ‘bool request()’:
+solution.cpp:33:11: error: a function-definition is not allowed here before ‘{’ token
+ int main(){
+           ^
+solution.cpp:44:1: error: expected ‘}’ at end of input
+ }
+ ^
+solution.cpp:44:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+6:38pm - sean running 44 lines of C++
+solution.cpp: In function ‘bool request()’:
+solution.cpp:33:11: error: a function-definition is not allowed here before ‘{’ token
+ int main(){
+           ^
+solution.cpp:44:1: error: expected ‘}’ at end of input
+ }
+ ^
+solution.cpp:44:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+6:39pm - sean running 45 lines of C++
+solution.cpp: In function ‘bool request()’:
+solution.cpp:33:12: error: a function-definition is not allowed here before ‘{’ token
+ int main() {
+            ^
+solution.cpp:44:1: error: expected ‘}’ at end of input
+ }
+ ^
+solution.cpp:44:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+6:39pm - Dan Busch running 46 lines of C++
+solution.cpp: In function ‘int main()’:
+solution.cpp:40:16: error: ‘sleep’ was not declared in this scope
+         sleep(1);
+                ^
+solution.cpp: In function ‘bool request()’:
+solution.cpp:32:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+6:39pm - sean running 46 lines of C++
+solution.cpp: In function ‘int main()’:
+solution.cpp:40:16: error: ‘sleep’ was not declared in this scope
+         sleep(1);
+                ^
+solution.cpp: In function ‘bool request()’:
+solution.cpp:32:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+6:40pm - sean running 48 lines of C++
+solution.cpp: In function ‘int main()’:
+solution.cpp:43:7: error: expected ‘;’ before ‘}’ token
+       }
+       ^
+solution.cpp: In function ‘bool request()’:
+solution.cpp:34:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+6:40pm - sean running 48 lines of C++
+solution.cpp: In function ‘bool request()’:
+solution.cpp:34:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+Program halted for running too long, sorry!
+6:41pm - Dan Busch running 49 lines of C++
+solution.cpp: In function ‘bool request()’:
+solution.cpp:34:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+sleeping
+sleeping
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+sleeping
+sleeping
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+sleeping
+sleeping
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+sleeping
+sleeping
+arrive time
+arrive time
+arrive time
+arrive time
+arrive time
+sleeping
+sleeping
+Program halted for running too long, sorry!
+Invite
+
+
+ sean
+Dan Busch
+Settings

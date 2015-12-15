@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+
+using namespace std;
+
+/*
+String Break -google 1point3acres
+将一个String分成若干个substring，每个substring有大小限制k，且在末尾有固定格式代表这是第几个substring   
+
+Example: "this is a string" ->  "this is (1/2)" "a string (2/2)"
+*/
+
+vector<string> stringBreak(string& str, int k){
+    vector<string> ret;
+    int size = str.size(), count = 0;
+    for(int i = k - 1; i < size + k; i += k){
+        if(i >= size){
+            int j = i - k;
+            i = size -1;    
+            while(str[i] != ' '){
+                --i;
+                ++count;
+                if(count >= size - 1 - j)
+                    return vector<string> {};                
+            }
+            count = 0;
+            ret.push_back(str.substr(i - k + 1, k));  
+            return ret;
+        }
+        else {
+            while(str[i] != ' '){
+                --i;
+                ++count;
+                if(count >= k)
+                    return vector<string> {};                
+            }
+            ret.push_back(str.substr(i - k + 1, k));
+        }
+    }
+}
+
+int main(){
+    vector<string> ret;
+    string input = "this is a string";
+    ret = stringBreak(input, 8);
+    cout << ret.size() << endl;
+    return 0;
+}

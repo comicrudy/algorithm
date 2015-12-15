@@ -1,0 +1,63 @@
+/*
+N-Queens
+
+The n-queens puzzle is the problem of placing n queens on an n¡Án chessboard such that no two queens attack each other.
+Given an integer n, return all distinct solutions to the n-queens puzzle.
+Each solution contains a distinct board configuration of the n-queens¡¯ placement, where ¡®Q¡¯ and ¡®.¡¯ both indicate a queen and an empty space respectively.
+
+backtracking:
+
+from row 0 to row N
+not same row, not same column, not same diagonal(row1-row2/col1-col2 == -1or1)
+
+
+*/
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+/*
+ N Queens
+*/
+
+vector<vector<string>> solveNQueens(int n) {
+    vector<vector<string>> ret;
+    
+    auto check = [n](const vector<int>& sln) -> bool {
+        vector<bool> visited(n, false);
+        for(auto i : sln) {
+            if(visited[i]) return false;
+            visited[i] = true;
+        }            
+        for(int i = 0; i < sln.size(); ++i) {
+            for(int j = i+1; j < sln.size(); ++j) {
+                if(abs(sln[i] - sln[j]) == abs(i - j)) {
+                    return false;
+                }
+            }
+        }            
+        return true;
+    };
+    
+    function<void(int, vector<int>)> dfs = [&](int row, vector<int> sln) {
+        if(row == n) {
+            vector<string> curret(n, string(n,'.'));
+            for(int i = 0; i < n; ++i) {
+                curret[i][sln[i]] = 'Q';
+            }
+            ret.push_back(curret);
+            return;
+        }            
+        for(int i = 0; i < n; ++i) {
+            sln.push_back(i);
+            if(check(sln)) dfs(row+1, sln);
+            sln.pop_back();
+        }
+    };
+    
+    dfs(0, {});
+    return ret;
+}

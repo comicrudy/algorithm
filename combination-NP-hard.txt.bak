@@ -1,0 +1,72 @@
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <memory>
+#include <cmath>
+#include <string.h>
+#include <algorithm>
+#include <map>
+#include <list>
+#include <climits>
+
+
+using namespace std;
+
+/*
+    "burger" $5, "soda" $3, "fries" $2, target 10
+// Given a menu and a target price ($10, for example), return all possible orders that add up to the target price.
+// Example Menu
+// Burger - $5
+// Shake - $3
+// Fries - $2
+
+// getOrders(menu, 10) // [[Burger, Burger], [Burger, Shake, Fries], [Shake, Shake, Fries, Fries]] 
+
+recursion
+    dfs(x) = A + dfs(x - a) for all items
+    
+*/
+
+vector<vector<string>> getOrders(map<int, string>& menu, int price){
+    vector<vector<string>> ret;
+    vector<string> T;
+    function<void (vector<string>&, int, int)> dfs = [&](vector<string>& T, int target, int count){
+        for(auto it = std::next(menu.rbegin(), count); it != menu.rend(); ++it){
+            if((target - it->first) == 0){
+                T.push_back(it->second);
+                ret.push_back(T);
+                T.pop_back();
+            }
+            else {
+                if((target - it->first) > 0){
+                    T.push_back(it->second);
+                    dfs(T, target - it->first, count);
+                    T.pop_back();
+                }
+            } 
+            ++count;
+        }
+    };
+    dfs(T, price, 0);
+    return ret;
+}
+
+int main(){
+    map<int, string> menu;
+    menu[5] = "burger";
+    menu[3] = "shake";
+    menu[2] = "fries";
+    vector<vector<string>> Orders = getOrders(menu, 10);
+    cout << Orders.size() << endl;
+    for(auto item : Orders){
+        cout << item.size() << endl;
+        for(auto element : item){
+            cout << element << ' ';
+        }
+        cout << endl;
+    }
+}

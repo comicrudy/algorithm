@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+
+using namespace std;
+
+/*
+Word break
+
+Given a string s and a dictionary of words dict, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+For example, given
+s = "leetcode",
+dict = ["leet", "code"].
+
+Return true because "leetcode" can be segmented as "leet code".
+*/
+map<string, int> dict;
+
+bool wordBreak(string& str, int k){
+    int size = str.size();
+//    int i = 0, j = 0;
+    if(k == size)
+        return 1;
+    for(int i = k; i < size; ++i){
+        if(dict.count(str.substr(k, i - k + 1))){
+//            string temp = str.substr(i - k + 2, size - i + k -2);
+            return wordBreak(str, i + 1);
+        }
+        else {
+            continue;
+        }
+    }
+    return 0;
+}
+
+int main(){
+    string input = "leetcode";
+    dict["leet"];
+    dict["code"];
+    cout << wordBreak(input, 0) << endl;
+    return 0;
+}

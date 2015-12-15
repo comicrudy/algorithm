@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+
+using namespace std;
+
+/*
+    Anagrams
+Given an array of strings, return all groups of strings that are anagrams.
+Note: All inputs will be in lower-case.
+*/
+
+map<string, vector<string>> ret;
+vector<string> V = {"abc", "bca", "aaa", "cba", "bbb", "ccc"};
+
+void anagrams(){
+    for(int i = 0; i < (int)V.size(); ++i){
+        string temp = V[i];
+        sort(temp.begin(), temp.end());
+        ret[temp].push_back(V[i]);
+    }
+}
+
+int main(){
+    anagrams();
+    for(auto it = ret.begin(); it != ret.end(); ++it){
+        for(int i = 0; i < (int)(it->second).size(); ++i){
+            cout << (it->second)[i] << ' ';
+        }
+        cout << endl;
+    }
+    return 0;
+}
+
+

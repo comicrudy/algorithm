@@ -1,0 +1,70 @@
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <memory>
+#include <cmath>
+#include <string.h>
+#include <algorithm>
+#include <map>
+#include <list>
+#include <climits>
+#include <set>
+
+
+using namespace std;
+/*
+    quantiles
+*/
+
+bool comP (pair<int, int> i, pair<int, int> j){
+    return (i.first < j.first);
+}
+
+void printQ(vector<pair<int, int>>& V, int q, long long n){
+    int size = (int)V.size(), j = 0, num;
+    long long count = 0;
+    for(int i = 1; i < q; ++i){
+        long long index = ceil((float)(n * i )/ q);
+//        cout << n << ' ' << i << ' ' << q << ' ' << index << endl;
+        while(j <= size){
+            if(index <= count){
+                cout << num << endl;
+                break;
+            }
+            else {
+                if(j >= size)
+                    break;
+                count += V[j].second;
+                num = V[j].first;
+                j++;
+            }
+        }
+        if(j > size){
+            break;
+        }
+    }
+}
+
+int main(){
+    vector<pair<int, int>> V;
+    int q, n, num, count;
+    long long total = 0;
+    cin >> q >> n;
+    for(int i = 0; i < n; ++i){
+        cin >> num >> count;
+        V.push_back(make_pair(num, count));
+        total += count;      
+    }
+    sort(V.begin(), V.end(), comP);
+    printQ(V, q, total);
+//    for(auto item : V){
+//        cout << item.first << ' ' << item.second << endl;
+//    }
+//    int roundup = 1.8;
+//    cout << ceil(1) << endl;
+    return 0;
+}

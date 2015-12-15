@@ -1,0 +1,35 @@
+#include <iostream>
+#include <limits.h>
+#include <bitset>
+#include <math.h>
+#include <algorithm>
+#include <unordered_set>
+#include <string>
+
+using namespace std;
+
+int happyNumber(int input){
+    string s = to_string(input);
+    int digits = s.size();
+    if(digits%2 == 1){
+        string str = "1010";
+        str = str.insert(1, digits-4+1, '0');
+        cout << str << endl;
+        return stoi(str);
+    }
+    else if(digits%2 == 0) {
+        for(int i = input; i < pow(10,digits); ++i){
+            s = to_string(i);
+            
+            if(s.substr(0, digits/2) == s.substr(digits/2, digits/2))
+                return stoi(s);
+        }
+    }
+    return -1;
+}
+
+int main(){
+    int input = 1213;
+    cout << happyNumber(input) << endl;
+    return 0;
+}

@@ -1,0 +1,74 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+vector<int> get_vector(vector<int>& V, int N){
+    string str;
+    getline(str);
+    int i = 0;
+    while(i < N){
+        int j = i+1;
+        while(j < N){
+            if(str[j] == ' '){
+                V.push_back(stoi(str.substr(i,j-i));
+                i = j;
+                break;
+            }
+            else {
+                ++j;
+            }
+        }
+        ++i;
+    }
+    return V;
+}
+
+void print_profit(vector<int>& V){
+    string s;
+    getline(s);
+    int N = stoi(s);
+    V  = get_vector(V, N);
+    vector<int> Sellpoint;
+    int max = 0, cost = 0, shares = 0, income = 0;
+    for(int i = N -1; i >= 0; --i){
+        if( V[i] >= max){
+            max  = V[i];
+            Sellpoint.push_back(i);
+        }
+    }
+    int size = Sellpoint.size();
+    int j = size - 1;
+    for(int i = 0; i < N; ++i){
+        if(j == 0)
+            break;
+        else if(i == Sellpoint[j]){
+                income = V[i]*shares;
+                shares = 0;
+                --j;
+            }
+        else {
+            ++share;
+            cost = cost + V[i];
+        }
+    }
+    cout << income - cost << endl;
+    V.clear();
+    Sellpoint.clear();
+}
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
+    string s;
+    getline(s);
+    int n = stoi(s);
+    vector<int> V;
+    for(int i = 0; i < n; ++i){
+        print_profit(V);
+    }
+    
+    return 0;
+}

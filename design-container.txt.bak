@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+#include <set>
+#include <utility>
+#include <algorithm>
+#include <math.h> 
+
+using namespace std;
+
+class Container {
+private:
+    vector<int> data;
+    map<int,int> mymap;
+    int size = 0;
+    
+public:
+    void add(int val) {
+        if(size < (int)data.size()) {
+            data[size++] = val;
+            mymap[val] = size - 1;
+        } else {
+            data.push_back(val);
+            mymap[val] = size;
+            ++size;
+        }
+    }
+    void remove(int val) {
+        if(!mymap.count(val)) return;
+        int id = mymap[val];
+        mymap.erase(val);
+        mymap[data[size - 1]] = id;
+        data[id] = data[--size];
+    }
+    int peek() const {
+        if(size == 0 || data.empty()) return -1;
+        return data[rand() % size];
+    }
+    bool empty() const {return size == 0;}
+};
+
+int main(){
+    Container C;
+    C.add(100);
+    cout << C.peek() << endl;
+    C.remove(100);
+    cout << C.peek() << endl;
+    return 0;
+}

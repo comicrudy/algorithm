@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+#include <set>
+#include <utility>
+#include <algorithm>
+#include <math.h> 
+#include <unordered_map>
+#include <utility>
+#include <algorithm> 
+
+using namespace std;
+
+bool ismorphic(string& str, string& str1){
+    int len = str.size();
+    int len1 = str1.size();
+    unordered_map<char, char> M;
+    if(len != len1) return false;
+    for(int i = 0; i < len; ++i){
+        if(M.find(str1[i])!=M.end()){
+//            str1[i] = M[str1[i]];
+            if(M[str1[i]] != str[i])
+                return false;
+        }
+        else {
+            M[str1[i]] = str[i];
+//            str1[i] = str[i];          
+        }
+    }
+    return true;
+}
+
+int main(){
+    string str;
+    string str1;
+    getline(cin, str);
+    getline(cin, str1);
+    cout << ismorphic(str, str1) << endl;
+    return 0;
+}

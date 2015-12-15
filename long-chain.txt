@@ -1,0 +1,76 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string>
+#include <deque>
+#include <map>
+
+using namespace std;
+
+/*
+1 longestchain
+类似word ladder，对于一个单词删掉任何一个字母，如果新单词出现在给的词典里 那么就形成一个 chain： old word -> new word -> newer word, 求最长长度(return int) 比如给vector<string> w = {a,ba,bca,bda,bdca} 最长是4： bdca->bda->ba->a;
+思路: 建一个map<长度，set<string>> 根据长度把输入的字典放到set里，然后从最长的长度所在的map[长度] 开始枚举每个单词并缩减然后进行recursive call， 比如bdca 那么就可能缩成dca,bca,bda 然后去map[3]里找，类推直到 word.size()==1 或找不到， 放个全局int去记最大长度。.鐣欏璁哄潧-涓�浜 -涓夊垎鍦 
+注意找到后从字典里删除和word ladder一样 否则只能过4个case 会超时。
+
+*/
+
+
+map<string, int> M = {{"a",1},{"ba",1},{"bca",1},{"bda",1},{"bdca",1}}; 
+int Cmax = 0, count1 = 0;
+
+void dfs(string& str){
+//    cout << str << endl;
+    string Sold, Snew;
+    Cmax = max(Cmax, count1);
+    int Ssize = (int)str.size();
+//    cout << Cmax << endl;
+    if((int)str.size() == 1)
+        return;
+    else {
+    for(int i = 0; i < Ssize; ++i){
+        Sold = str; 
+        Snew = Sold.erase(i, 1);
+        cout << Snew << endl;
+        if(M.count(Snew)){
+            M[Snew] = -1;
+            ++count1; 
+            cout << count1 <<endl;
+            dfs(Snew);
+            --count1;
+            cout << count1 <<endl;
+        }
+        else {
+            //Snew = str;
+            continue;
+        }
+    }
+    }
+    return;
+}
+
+
+int longestChain(){
+//    Cmax = 5;
+    string temp;
+    for(auto it = M.rbegin(); it != M.rend(); ++it){
+        count1 = 0;
+        if(it->second == -1)
+            continue;
+        else {
+            temp = it->first;
+            M[temp] = -1;
+            dfs(temp);    
+        }
+    }
+    return Cmax + 1;
+}
+
+int main(){
+    cout << longestChain() << endl;
+    return 0;
+}
+

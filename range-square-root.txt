@@ -1,0 +1,18 @@
+#include <iostream>
+#include <limits.h>
+#include <bitset>
+#include <math.h>
+#include <algorithm>
+
+using namespace std;
+
+int rangeSquare(int s, int e){
+    int rs = sqrt(s);
+    int re = sqrt(e);
+    return rs*rs == s ? re-rs+1 : re-rs;
+}
+
+int main(){
+    cout << rangeSquare(1,16) << endl;
+    return 0;
+}

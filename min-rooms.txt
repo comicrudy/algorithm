@@ -1,0 +1,52 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string>
+#include <deque>
+#include <map>
+#include <queue>
+#include <functional>
+#include <utility>
+#include <set>
+
+using namespace std;
+
+/*
+    Given a set of meetings [start, end], return the minimum number of rooms 
+    needed to schedule the meetings such that no two overlap.
+    (To clarify, each meeting must have a room to itself.) Ex: [1, 6], [3, 8], [7, 9] ==&gt; 2  
+*/
+
+bool comPe(pair<int, int>& a, pair<int, int>& b){
+    return a.second < b.second;
+}
+
+bool comPs(pair<int, int>& a, pair<int, int>& b){
+    return a.second > b.second;
+}
+
+int maxRooms(vector<pair<int, int>>& meetings){
+    auto V = meetings;
+    sort(meetings.begin(), meetings.end(), comPe);
+    sort(V.begin(), V.end(), comPs);
+    int size = meetings.size(), rooms = 0, count = 0, j;
+    for(int i = 0; i < size; ++i){
+        j = 0;
+        count = 0;
+        while(V[j].first < meetings[i].second && j < size){
+            ++j;
+            ++count;
+        }
+        rooms = max(rooms, count - i);
+    }
+    return rooms;
+}
+
+int main(){
+    vector<pair<int, int>> meetings = {{1,6},{3,8},{6,9}};
+    cout << "max rooms = " << maxRooms(meetings) << endl;
+    return 0;
+}

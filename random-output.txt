@@ -1,0 +1,64 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+#include <unordered_map>
+#include <stdio.h>
+#include <string>
+#include <deque>
+#include <map>
+
+using namespace std;
+
+/*
+random string
+
+input ¡°I want to buy a cup of water¡± output ¡°I wnat to buy a cup of wtear¡±
+not change first and last char, random the rest
+
+*/
+
+void printV(vector<char> V){
+    int size = (int)V.size(), j;
+    char temp;
+    if(size <= 3){
+        for(int i = 0; i < size; ++i){
+            cout << V[i];
+        }
+    }
+    else {
+        cout << V[0];
+        for(int i = 1; i < size - 1; ++i){
+            j = rand()% (size-1-i) + i;
+            temp = V[j];
+            V[j] = V[i];
+            V[i] = temp;
+            cout << V[i];
+        }
+        cout << V[size-1];
+    }
+}
+
+void randomOutput(string& str){
+    int size = str.size(), j, k;
+    vector<char> V; 
+    for(int i = 0; i < size; ++i){
+        V.push_back(str[i]);
+        if(str[i] == ' '){
+            V.resize(V.size()-1);
+            printV(V);
+            cout << ' ';
+            V.clear();
+        }
+        if(i == size -1){
+            printV(V);
+            V.clear();
+        }
+    }
+}
+
+int main(){
+    string s = "I want to buy a cup of water";
+    randomOutput(s);
+    return 0;
+}
